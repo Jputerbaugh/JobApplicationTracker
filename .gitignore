@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# Database File to prevent commiting PII
+*.db
+
 # dotenv files
 .env
 
