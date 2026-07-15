@@ -1,7 +1,0 @@
-/workspaces/JobApplicationTracker/bin/Release/net10.0/publish/JobApplicationTracker
-/workspaces/JobApplicationTracker/bin/Release/net10.0/publish/appsettings.Development.json
-/workspaces/JobApplicationTracker/bin/Release/net10.0/publish/appsettings.json
-/workspaces/JobApplicationTracker/bin/Release/net10.0/publish/JobApplicationTracker.dll
-/workspaces/JobApplicationTracker/bin/Release/net10.0/publish/JobApplicationTracker.deps.json
-/workspaces/JobApplicationTracker/bin/Release/net10.0/publish/JobApplicationTracker.runtimeconfig.json
-/workspaces/JobApplicationTracker/bin/Release/net10.0/publish/JobApplicationTracker.pdb
