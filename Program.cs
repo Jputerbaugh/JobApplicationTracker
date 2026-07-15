@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(
     options =>
         options.UseSqlite(
-            builder.Configuration.GetConnectionString("Default Connection")
+            builder.Configuration.GetConnectionString("DefaultConnection")
         )
 );
 

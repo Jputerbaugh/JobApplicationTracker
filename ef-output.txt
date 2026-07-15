@@ -1,0 +1,137 @@
+Using project '/workspaces/JobApplicationTracker/JobApplicationTracker.csproj'.
+Using startup project '/workspaces/JobApplicationTracker/JobApplicationTracker.csproj'.
+dotnet msbuild /getProperty:ProjectName /getProperty:AssemblyName /getProperty:DesignAssembly /getProperty:Language /getProperty:OutputPath /getProperty:PlatformTarget /getProperty:ProjectAssetsFile /getProperty:ProjectDir /getProperty:RootNamespace /getProperty:RuntimeFrameworkVersion /getProperty:TargetFileName /getProperty:TargetFrameworkMoniker /getProperty:Nullable /getProperty:TargetFramework /getProperty:TargetPlatformIdentifier /getProperty:Platform /t:ResolvePackageAssets /getItem:RuntimeCopyLocalItems /workspaces/JobApplicationTracker/JobApplicationTracker.csproj
+/workspaces/JobApplicationTracker/JobApplicationTracker.csproj : warning NU1903: Package 'SQLitePCLRaw.lib.e_sqlite3' 2.1.11 has a known high severity vulnerability, https://github.com/advisories/GHSA-2m69-gcr7-jv3q
+dotnet msbuild /getProperty:ProjectName /getProperty:AssemblyName /getProperty:DesignAssembly /getProperty:Language /getProperty:OutputPath /getProperty:PlatformTarget /getProperty:ProjectAssetsFile /getProperty:ProjectDir /getProperty:RootNamespace /getProperty:RuntimeFrameworkVersion /getProperty:TargetFileName /getProperty:TargetFrameworkMoniker /getProperty:Nullable /getProperty:TargetFramework /getProperty:TargetPlatformIdentifier /getProperty:Platform /t:ResolvePackageAssets /getItem:RuntimeCopyLocalItems /workspaces/JobApplicationTracker/JobApplicationTracker.csproj
+/workspaces/JobApplicationTracker/JobApplicationTracker.csproj : warning NU1903: Package 'SQLitePCLRaw.lib.e_sqlite3' 2.1.11 has a known high severity vulnerability, https://github.com/advisories/GHSA-2m69-gcr7-jv3q
+Build started...
+dotnet build /workspaces/JobApplicationTracker/JobApplicationTracker.csproj /verbosity:quiet /nologo /p:PublishAot=false
+/workspaces/JobApplicationTracker/JobApplicationTracker.csproj : warning NU1903: Package 'SQLitePCLRaw.lib.e_sqlite3' 2.1.11 has a known high severity vulnerability, https://github.com/advisories/GHSA-2m69-gcr7-jv3q
+/workspaces/JobApplicationTracker/JobApplicationTracker.csproj : warning NU1903: Package 'SQLitePCLRaw.lib.e_sqlite3' 2.1.11 has a known high severity vulnerability, https://github.com/advisories/GHSA-2m69-gcr7-jv3q
+
+Build succeeded.
+
+/workspaces/JobApplicationTracker/JobApplicationTracker.csproj : warning NU1903: Package 'SQLitePCLRaw.lib.e_sqlite3' 2.1.11 has a known high severity vulnerability, https://github.com/advisories/GHSA-2m69-gcr7-jv3q
+/workspaces/JobApplicationTracker/JobApplicationTracker.csproj : warning NU1903: Package 'SQLitePCLRaw.lib.e_sqlite3' 2.1.11 has a known high severity vulnerability, https://github.com/advisories/GHSA-2m69-gcr7-jv3q
+    2 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.36
+
+Build succeeded.
+dotnet exec --depsfile /workspaces/JobApplicationTracker/bin/Debug/net10.0/JobApplicationTracker.deps.json --additionalprobingpath /home/codespace/.nuget/packages --runtimeconfig /workspaces/JobApplicationTracker/bin/Debug/net10.0/JobApplicationTracker.runtimeconfig.json /usr/share/dotnet/tools/.store/dotnet-ef/10.0.10/dotnet-ef/10.0.10/tools/net8.0/any/tools/net8.0/any/ef.dll database update --assembly /workspaces/JobApplicationTracker/bin/Debug/net10.0/JobApplicationTracker.dll --project /workspaces/JobApplicationTracker/JobApplicationTracker.csproj --startup-assembly /workspaces/JobApplicationTracker/bin/Debug/net10.0/JobApplicationTracker.dll --startup-project /workspaces/JobApplicationTracker/JobApplicationTracker.csproj --project-dir /workspaces/JobApplicationTracker/ --root-namespace JobApplicationTracker --language C# --framework net10.0 --design-assembly /home/codespace/.nuget/packages/microsoft.entityframeworkcore.design/10.0.10/lib/net10.0/Microsoft.EntityFrameworkCore.Design.dll --nullable --working-dir /workspaces/JobApplicationTracker --verbose
+Using assembly 'JobApplicationTracker'.
+Using startup assembly 'JobApplicationTracker'.
+Using application base '/workspaces/JobApplicationTracker/bin/Debug/net10.0'.
+Using working directory '/workspaces/JobApplicationTracker'.
+Using root namespace 'JobApplicationTracker'.
+Using project directory '/workspaces/JobApplicationTracker/'.
+Remaining arguments: .
+Finding DbContext classes...
+Using environment 'Development'.
+Finding IDesignTimeDbContextFactory implementations...
+Finding DbContext classes in the project...
+Found DbContext 'ApplicationDbContext'.
+Finding application service provider in assembly 'JobApplicationTracker'...
+Finding Microsoft.Extensions.Hosting service provider...
+Using application service provider from Microsoft.Extensions.Hosting.
+Using context 'ApplicationDbContext'.
+Finding design-time services referenced by assembly 'JobApplicationTracker'...
+Finding design-time services referenced by assembly 'JobApplicationTracker'...
+No referenced design-time services were found.
+Finding design-time services for provider 'Microsoft.EntityFrameworkCore.Sqlite'...
+Using design-time services from provider 'Microsoft.EntityFrameworkCore.Sqlite'.
+Finding IDesignTimeServices implementations in assembly 'JobApplicationTracker'...
+No design-time services were found.
+info: Microsoft.EntityFrameworkCore.Migrations[20411]
+      Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsLock' AND "type" = 'table';
+Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsLock' AND "type" = 'table';
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE IF NOT EXISTS "__EFMigrationsLock" (
+          "Id" INTEGER NOT NULL CONSTRAINT "PK___EFMigrationsLock" PRIMARY KEY,
+          "Timestamp" TEXT NOT NULL
+      );
+Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsLock" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK___EFMigrationsLock" PRIMARY KEY,
+    "Timestamp" TEXT NOT NULL
+);
+Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT OR IGNORE INTO "__EFMigrationsLock"("Id", "Timestamp") VALUES(1, '2026-07-15 13:44:38.188941+00:00');
+SELECT changes();
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT OR IGNORE INTO "__EFMigrationsLock"("Id", "Timestamp") VALUES(1, '2026-07-15 13:44:38.188941+00:00');
+      SELECT changes();
+Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+    "ProductVersion" TEXT NOT NULL
+);info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+          "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+          "ProductVersion" TEXT NOT NULL
+      );
+
+Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT "MigrationId", "ProductVersion"
+      FROM "__EFMigrationsHistory"
+      ORDER BY "MigrationId";
+Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+info: Microsoft.EntityFrameworkCore.Migrations[20402]
+      Applying migration '20260715132910_InitialCreate'.
+Applying migration '20260715132910_InitialCreate'.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE "JobApplications" (
+          "Id" INTEGER NOT NULL CONSTRAINT "PK_JobApplications" PRIMARY KEY AUTOINCREMENT,
+          "Company" TEXT NOT NULL,
+          "Position" TEXT NOT NULL,
+          "Location" TEXT NULL,
+          "Status" INTEGER NOT NULL,
+          "ApplicationDate" TEXT NOT NULL,
+          "JobURL" TEXT NULL,
+          "FollowUp" TEXT NULL,
+          "Notes" TEXT NULL
+      );
+Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE "JobApplications" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_JobApplications" PRIMARY KEY AUTOINCREMENT,
+    "Company" TEXT NOT NULL,
+    "Position" TEXT NOT NULL,
+    "Location" TEXT NULL,
+    "Status" INTEGER NOT NULL,
+    "ApplicationDate" TEXT NOT NULL,
+    "JobURL" TEXT NULL,
+    "FollowUp" TEXT NULL,
+    "Notes" TEXT NULL
+);
+Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+VALUES ('20260715132910_InitialCreate', '10.0.10');info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+      VALUES ('20260715132910_InitialCreate', '10.0.10');
+
+Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+DELETE FROM "__EFMigrationsLock";info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      DELETE FROM "__EFMigrationsLock";
+
+Done.
