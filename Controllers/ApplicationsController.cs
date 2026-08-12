@@ -38,6 +38,67 @@ public class ApplicationsController : Controller
 
         return View(application);
     }
-    
+
+    public async Task<IActionResult> Edit(int id)
+    {
+        var application = await _context.JobApplications.FindAsync(id);
+        if (application == null)
+        {
+            return NotFound();
+        }
+
+        return View(application);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, JobApplication application)
+    {
+        if (id != application.Id)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                _context.Update(application);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ApplicationExists(application.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(application);
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var application = await _context.JobApplications.FindAsync(id);
+        if (application == null)
+        {
+            return NotFound();
+        }
+
+        _context.JobApplications.Remove(application);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+    private bool ApplicationExists(int id)
+    {
+        return _context.JobApplications.Any(e => e.Id == id);
+    }
 }
 
