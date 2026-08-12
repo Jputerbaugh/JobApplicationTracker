@@ -1,14 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using JobApplicationTracker.Data;
 using Microsoft.AspNetCore.Mvc;
+using JobApplicationTracker.Models;
 
 namespace JobApplicationTracker.Controllers;
 
-public class ApplicationsContoller : Controller
+public class ApplicationsController : Controller
 {
     private readonly ApplicationDbContext _context;
 
-    public ApplicationsContoller(ApplicationDbContext context)
+    public ApplicationsController(ApplicationDbContext context)
     {
         _context = context;
     }
@@ -19,5 +20,24 @@ public class ApplicationsContoller : Controller
 
         return View(applications);
     }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(JobApplication application)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.JobApplications.Add(application);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(application);
+    }
     
 }
+

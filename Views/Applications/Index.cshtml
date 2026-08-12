@@ -1,21 +1,45 @@
+@model IEnumerable<JobApplication>
+
 @{
     ViewData["Title"] = "Applications";
 }
 
 <h1>Job Applications</h1>
+<a asp-action="Create" class="btn btn-primary mb-3">Add New Application</a>
 
 @if (!Model.Any()) {
-
+    <p>
+        No job applications have been added yet
+    </p>
 }
 else {
     <table class = "table table-striped">
         <thead>
             <tr>
-                <th>...</th>
+                <th>Company</th>
+                <th>Position</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Application Date</th>
+                <th>URL</th>
+                <th>Follow Up</th>
+                <th>Notes</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Rows go here -->
+            @foreach (var application in Model) 
+            {
+                <tr>
+                    <td>@application.Company</td>
+                    <td>@application.Position</td>
+                    <td>@application.Location</td>
+                    <td>@application.Status</td>
+                    <td>@application.ApplicationDate.ToShortDateString()</td>
+                    <td>@application.JobURL</td>
+                    <td>@application.FollowUpDate?.ToShortDateString()</td>
+                    <td>@application.Notes</td>
+                </tr>
+            }
         </tbody>
     </table>
 }
