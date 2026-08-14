@@ -4,46 +4,124 @@
     ViewData["Title"] = "Applications";
 }
 
-<h1>Job Applications</h1>
-<a asp-action="Create" class="btn btn-primary mb-3">Add New Application</a>
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="fw-bold mb-1">Job Applications</h1>
+        <p class="text-muted mb-0">
+            Review and manage the opportunities in your job search.
+        </p>
+    </div>
 
-@if (!Model.Any()) {
-    <p>
-        No job applications have been added yet
-    </p>
+    <a asp-action="Create" class="btn btn-primary">
+        Add New Application
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+            <h2 class="h4">No applications yet</h2>
+
+            <p class="text-muted">
+                Add your first job application to begin tracking your search.
+            </p>
+
+            <a asp-action="Create" class="btn btn-primary">
+                Add Your First Application
+            </a>
+        </div>
+    </div>
 }
-else {
-    <table class = "table table-striped">
-        <thead>
-            <tr>
-                <th>Company</th>
-                <th>Position</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th>Application Date</th>
-                <th>URL</th>
-                <th>Follow Up</th>
-                <th>Notes</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var application in Model) 
-            {
-                <tr>
-                    <td>@application.Company</td>
-                    <td>@application.Position</td>
-                    <td>@application.Location</td>
-                    <td>@application.Status</td>
-                    <td>@application.ApplicationDate.ToShortDateString()</td>
-                    <td>@application.JobURL</td>
-                    <td>@application.FollowUpDate?.ToShortDateString()</td>
-                    <td>@application.Notes</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@application.Id" class="btn btn-sm btn-primary">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@application.Id" class="btn btn-sm btn-danger">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+else
+{
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Company</th>
+                        <th>Position</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Application Date</th>
+                        <th>Notes</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var application in Model)
+                    {
+                        var statusClass = application.Status switch
+                        {
+                            ApplicationStatus.Interested => "text-bg-secondary",
+                            ApplicationStatus.Applied => "text-bg-primary",
+                            ApplicationStatus.Interviewing => "text-bg-warning",
+                            ApplicationStatus.Offer => "text-bg-success",
+                            ApplicationStatus.Rejected => "text-bg-danger",
+                            ApplicationStatus.Withdrawn => "text-bg-dark",
+                            _ => "text-bg-secondary"
+                        };
+
+                        <tr>
+                            <td class="fw-semibold">
+                                @application.Company
+                            </td>
+
+                            <td>@application.Position</td>
+
+                            <td>
+                                @if (string.IsNullOrWhiteSpace(application.Location))
+                                {
+                                    <span class="text-muted">—</span>
+                                }
+                                else
+                                {
+                                    @application.Location
+                                }
+                            </td>
+
+                            <td>
+                                <span class="badge @statusClass">
+                                    @application.Status
+                                </span>
+                            </td>
+
+                            <td>
+                                @application.ApplicationDate.ToShortDateString()
+                            </td>
+
+                            <td>
+                                @if (string.IsNullOrWhiteSpace(application.Notes))
+                                {
+                                    <span class="text-muted">—</span>
+                                }
+                                else
+                                {
+                                    @application.Notes
+                                }
+                            </td>
+
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a asp-action="Edit"
+                                       asp-route-id="@application.Id"
+                                       class="btn btn-outline-primary">
+                                        Edit
+                                    </a>
+
+                                    <a asp-action="Delete"
+                                       asp-route-id="@application.Id"
+                                       class="btn btn-outline-danger">
+                                        Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }

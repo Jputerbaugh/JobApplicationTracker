@@ -1,8 +1,73 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="text-center py-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Organize Your Job Search</h1>
+
+        <p class="lead text-muted mx-auto mb-4" style="max-width: 700px;">
+            Keep your applications, statuses, important dates, job postings,
+            and notes organized in one convenient place.
+        </p>
+
+        <div class="d-flex justify-content-center gap-2 flex-wrap">
+            <a asp-controller="Applications"
+               asp-action="Index"
+               class="btn btn-primary btn-lg">
+                View Applications
+            </a>
+
+            <a asp-controller="Applications"
+               asp-action="Create"
+               class="btn btn-outline-primary btn-lg">
+                Add Application
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="pb-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title h4">Track Applications</h2>
+
+                        <p class="card-text text-muted">
+                            Save company names, positions, locations, application
+                            dates, and links to job postings.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title h4">Monitor Progress</h2>
+
+                        <p class="card-text text-muted">
+                            Update each opportunity as it moves from interested
+                            to applied, interviewing, offer, or another status.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title h4">Plan Follow-Ups</h2>
+
+                        <p class="card-text text-muted">
+                            Record follow-up dates and notes so important
+                            opportunities and next steps are easier to remember.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
