@@ -90,10 +90,26 @@ public class ApplicationsController : Controller
         {
             return NotFound();
         }
+        
+        return View(application);
+    }
+
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var application = await _context.JobApplications.FindAsync(id);
+        if (application == null)
+        {
+            return NotFound();
+        }
 
         _context.JobApplications.Remove(application);
         await _context.SaveChangesAsync();
+        
         return RedirectToAction(nameof(Index));
+
     }
 
     private bool ApplicationExists(int id)
