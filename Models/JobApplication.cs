@@ -1,13 +1,67 @@
 namespace JobApplicationTracker.Models;
 using System.ComponentModel.DataAnnotations;
-public enum ApplicationStatus
+
+public enum ApplicationStage
 {
-    Interested, 
-    Applied,
-    Interviewing,
-    Offer, 
-    Rejected, 
-    Withdrawn
+    [Display(Name = "Interested")]
+    Interested = 0,
+
+    [Display(Name = "Applied")]
+    Applied = 1,
+
+    [Display(Name = "Assessment")]
+    Assessment = 2,
+
+    [Display(Name = "Recruiter Screen")]
+    RecruiterScreen = 3,
+
+    [Display(Name = "Interviewing")]
+    Interviewing = 4,
+
+    [Display(Name = "Offer")]
+    Offer = 5
+}
+
+public enum InterviewRound
+{
+    [Display(Name = "No Interview")]
+    None = 0,
+
+    [Display(Name = "First Interview")]
+    First = 1,
+
+    [Display(Name = "Second Interview")]
+    Second = 2,
+
+    [Display(Name = "Third Interview")]
+    Third = 3,
+
+    [Display(Name = "Fourth Interview")]
+    Fourth = 4,
+
+    [Display(Name = "Fifth Interview or Later")]
+    FifthOrLater = 5
+}
+
+public enum ApplicationOutcome
+{
+    [Display(Name = "Active")]
+    Active = 0,
+
+    [Display(Name = "No Response")]
+    NoResponse = 1,
+
+    [Display(Name = "Rejected")]
+    Rejected = 2,
+
+    [Display(Name = "Withdrawn")]
+    Withdrawn = 3,
+
+    [Display(Name = "Accepted")]
+    Accepted = 4,
+
+    [Display(Name = "Declined")]
+    Declined = 5
 }
 
 public class JobApplication
@@ -28,10 +82,16 @@ public class JobApplication
     [Display(Name = "Location")]
     public string? Location { get; set; }
 
-    [Required(ErrorMessage = "Status is required.")]
-    [Display(Name = "Status")]
-    public ApplicationStatus Status { get; set; }
-    //Interested, Applied, Interviewing, Offer, Rejected, Withdrawn
+    [Display(Name = "Furthest Stage Reached")]
+    public ApplicationStage Stage { get; set; } = ApplicationStage.Applied;
+
+    [Display(Name = "Interview Round Reached")]
+    public InterviewRound FurthestInterviewRound { get; set; }
+        = InterviewRound.None;
+
+    [Display(Name = "Outcome")]
+    public ApplicationOutcome Outcome { get; set; }
+        = ApplicationOutcome.Active;
 
     [Required(ErrorMessage = "Application date is required.")]
     [Display(Name = "Application Date")]

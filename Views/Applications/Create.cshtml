@@ -42,19 +42,44 @@
                             <span asp-validation-for="Location"
                                   class="text-danger"></span>
                         </div>
-
+                        
                         <div class="col-md-6">
-                            <label asp-for="Status" class="form-label"></label>
+                            <label asp-for="Stage" class="form-label"></label>
 
-                            <select asp-for="Status"
-                                    asp-items="Html.GetEnumSelectList<ApplicationStatus>()"
+                            <select asp-for="Stage"
+                                    asp-items="Html.GetEnumSelectList<ApplicationStage>()"
                                     class="form-select">
                             </select>
 
-                            <span asp-validation-for="Status"
-                                  class="text-danger"></span>
+                            <span asp-validation-for="Stage"
+                                class="text-danger"></span>
                         </div>
 
+                        <div class="col-md-6">
+                            <label asp-for="FurthestInterviewRound"
+                                class="form-label"></label>
+
+                            <select asp-for="FurthestInterviewRound"
+                                    asp-items="Html.GetEnumSelectList<InterviewRound>()"
+                                    class="form-select">
+                            </select>
+
+                            <span asp-validation-for="FurthestInterviewRound"
+                                class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Outcome" class="form-label"></label>
+
+                            <select asp-for="Outcome"
+                                    asp-items="Html.GetEnumSelectList<ApplicationOutcome>()"
+                                    class="form-select">
+                            </select>
+
+                            <span asp-validation-for="Outcome"
+                                class="text-danger"></span>
+                        </div>
+                    
                         <div class="col-md-6">
                             <label asp-for="ApplicationDate"
                                    class="form-label"></label>

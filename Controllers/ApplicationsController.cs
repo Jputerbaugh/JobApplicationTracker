@@ -27,6 +27,7 @@ public class ApplicationsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(JobApplication application)
     {
         if (ModelState.IsValid)

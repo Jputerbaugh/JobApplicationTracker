@@ -44,8 +44,27 @@
                         }
                     </dd>
 
-                    <dt class="col-sm-4">Status</dt>
-                    <dd class="col-sm-8">@Model.Status</dd>
+                    <dt class="col-sm-4">Furthest Stage Reached</dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Stage)
+                    </dd>
+
+                    <dt class="col-sm-4">Interview Round Reached</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.FurthestInterviewRound == InterviewRound.None)
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.FurthestInterviewRound)
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4">Outcome</dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Outcome)
+                    </dd>
 
                     <dt class="col-sm-4">Application Date</dt>
                     <dd class="col-sm-8">

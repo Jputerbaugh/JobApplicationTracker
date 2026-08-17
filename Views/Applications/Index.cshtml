@@ -43,7 +43,9 @@ else
                         <th>Company</th>
                         <th>Position</th>
                         <th>Location</th>
-                        <th>Status</th>
+                        <th>Stage</th>
+                        <th>Interview Round</th>
+                        <th>Outcome</th>
                         <th>Application Date</th>
                         <th>Notes</th>
                         <th class="text-end">Actions</th>
@@ -53,14 +55,25 @@ else
                 <tbody>
                     @foreach (var application in Model)
                     {
-                        var statusClass = application.Status switch
+                        var stageClass = application.Stage switch
                         {
-                            ApplicationStatus.Interested => "text-bg-secondary",
-                            ApplicationStatus.Applied => "text-bg-primary",
-                            ApplicationStatus.Interviewing => "text-bg-warning",
-                            ApplicationStatus.Offer => "text-bg-success",
-                            ApplicationStatus.Rejected => "text-bg-danger",
-                            ApplicationStatus.Withdrawn => "text-bg-dark",
+                            ApplicationStage.Interested => "text-bg-secondary",
+                            ApplicationStage.Applied => "text-bg-primary",
+                            ApplicationStage.Assessment => "text-bg-info",
+                            ApplicationStage.RecruiterScreen => "text-bg-warning",
+                            ApplicationStage.Interviewing => "text-bg-warning",
+                            ApplicationStage.Offer => "text-bg-success",
+                            _ => "text-bg-secondary"
+                        };
+
+                        var outcomeClass = application.Outcome switch
+                        {
+                            ApplicationOutcome.Active => "text-bg-primary",
+                            ApplicationOutcome.NoResponse => "text-bg-secondary",
+                            ApplicationOutcome.Rejected => "text-bg-danger",
+                            ApplicationOutcome.Withdrawn => "text-bg-dark",
+                            ApplicationOutcome.Accepted => "text-bg-success",
+                            ApplicationOutcome.Declined => "text-bg-dark",
                             _ => "text-bg-secondary"
                         };
 
@@ -83,8 +96,27 @@ else
                             </td>
 
                             <td>
-                                <span class="badge @statusClass">
-                                    @application.Status
+                                <span class="badge @stageClass">
+                                    @Html.DisplayFor(modelItem => application.Stage)
+                                </span>
+                            </td>
+
+                            <td>
+                                @if (application.FurthestInterviewRound == InterviewRound.None)
+                                {
+                                    <span class="text-muted">—</span>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(
+                                        modelItem => application.FurthestInterviewRound
+                                    )
+                                }
+                            </td>
+
+                            <td>
+                                <span class="badge @outcomeClass">
+                                    @Html.DisplayFor(modelItem => application.Outcome)
                                 </span>
                             </td>
 
