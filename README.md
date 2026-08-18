@@ -1,104 +1,72 @@
 # Job Application Tracker
 
-## Project Overview
+A full-stack ASP.NET Core MVC application for organizing job applications and tracking progress throughout the hiring process.
 
-The Job Application Tracker is a web application designed to help users organize and manage their job search. It will allow users to save job applications, track their current status, record important dates, and keep notes about each opportunity.
+This project was built to strengthen my experience with C#, MVC architecture, relational databases, server-side validation, and responsive web design.
 
-The goal of this project is to build a complete web application while gaining experience with C#, ASP.NET Core MVC, databases, and GitHub.
+## Live Demo
 
-## Project Goals
+A public demonstration version is currently being prepared.
 
-The first version of the application will allow users to:
+The demo will contain fictional, shared data that may reset periodically.
 
-* Add a new job application
-* View all saved applications
-* Edit an existing application
-* Delete an application
-* Track the status of each application
-* Store notes and important dates
+## Features
 
-## Application Information
+- Create, view, edit, and delete job applications
+- Track the furthest hiring stage reached
+- Record interview rounds and final outcomes
+- Search by company or position
+- Filter applications by stage and outcome
+- Sort by application date or company name
+- View dashboard statistics and hiring-funnel analytics
+- Validate related application-progress fields
+- Display success notifications after changes
+- Use the application across desktop and mobile screen sizes
 
-Each job application may contain:
+## Application Data
 
-* Company name
-* Position title
-* Location
-* Application status
-* Application date
-* Job posting link
-* Follow-up date
-* Notes
+Each job application can include:
 
-## Planned Application Statuses
+- Company name
+- Position title
+- Location
+- Application date
+- Furthest hiring stage reached
+- Furthest interview round reached
+- Current outcome
+- Job-posting URL
+- Follow-up date
+- Notes
 
-* Interested
-* Applied
-* Interviewing
-* Offer
-* Rejected
-* Withdrawn
+## Dashboard
+
+The dashboard summarizes the current job search with:
+
+- Total applications
+- Interview rate
+- Offer rate
+- Accepted offers
+- Applications advancing beyond the initial stage
+- Applications reaching multiple interview rounds
 
 ## Technologies
 
-This project is planned to use:
+- C#
+- .NET 10
+- ASP.NET Core MVC
+- Entity Framework Core 10
+- SQLite
+- Razor
+- HTML and CSS
+- Bootstrap
+- Git and GitHub
 
-* C#
-* ASP.NET Core MVC
-* Entity Framework Core
-* SQLite
-* HTML
-* CSS
-* Bootstrap
-* Git and GitHub
+## Project Structure
 
-## Initial Development Plan
-
-### Phase 1: Project Setup
-
-* Create the GitHub repository
-* Create the ASP.NET Core MVC project
-* Run the default application
-* Learn the basic MVC project structure
-
-### Phase 2: Application Model
-
-* Create the `JobApplication` model
-* Choose the correct data type for each property
-* Add basic validation rules
-
-### Phase 3: Database
-
-* Add Entity Framework Core
-* Connect the application to SQLite
-* Create the first database migration
-* Store job applications in the database
-
-### Phase 4: Core Features
-
-* Display all applications
-* Add new applications
-* View application details
-* Edit applications
-* Delete applications
-
-### Phase 5: Improvements
-
-Possible future features include:
-
-* Search and filtering
-* Sorting by date, company, or status
-* Dashboard statistics
-* Follow-up reminders
-* Resume version tracking
-* User accounts
-* Data export
-* Mobile-friendly design
-
-## Current Status
-
-The project is currently in the initial setup and planning stage.
-
-## Purpose
-
-This project is being created as a learning experience and portfolio project. The main focus is understanding how the different parts of a web application work together rather than immediately building a large or complex application.
+```text
+Controllers/    Handles application requests and database operations
+Data/           Contains the Entity Framework database context
+Migrations/     Stores database schema changes
+Models/         Contains application data models and view models
+Views/          Contains Razor pages for the user interface
+wwwroot/        Contains CSS, JavaScript, and static assets
