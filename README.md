@@ -6,9 +6,11 @@ This project was built to strengthen my experience with C#, MVC architecture, re
 
 ## Live Demo
 
-A public demonstration version is currently being prepared.
+[Open the live Job Application Tracker demo](https://job-application-tracker-demo.onrender.com)
 
-The demo will contain fictional, shared data that may reset periodically.
+The public demo contains fictional, shared data. Visitors can test the application's CRUD, filtering, sorting, validation, and dashboard features, then use **Reset Demo Data** to restore the original records.
+
+Because the demo uses free hosting, it may take a moment to start after a period of inactivity.
 
 ## Features
 
@@ -60,6 +62,8 @@ The dashboard summarizes the current job search with:
 - HTML and CSS
 - Bootstrap
 - Git and GitHub
+- Docker
+- Render
 
 ## Project Structure
 
