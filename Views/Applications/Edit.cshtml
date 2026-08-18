@@ -17,12 +17,12 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
                 <form asp-action="Edit" method="post">
-                    <input type="hidden" asp-for="Id" />
-
                     <div asp-validation-summary="ModelOnly"
                          class="text-danger mb-3">
                     </div>
 
+                    <input type="hidden" asp-for="Id" />
+                    
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label asp-for="Company" class="form-label"></label>

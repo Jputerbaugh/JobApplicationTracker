@@ -14,13 +14,65 @@ public class ApplicationsController : Controller
         _context = context;
     }
 
-    public async Task<IActionResult> Index()
-    {
-        var applications = await _context.JobApplications.ToListAsync();
+    public async Task<IActionResult> Index(
+    string? searchTerm,
+    ApplicationStage? selectedStage,
+    ApplicationOutcome? selectedOutcome,
+    string sortOrder = "newest")
+{
+    var query = _context.JobApplications
+        .AsNoTracking()
+        .AsQueryable();
 
-        return View(applications);
+    if (!string.IsNullOrWhiteSpace(searchTerm))
+    {
+        searchTerm = searchTerm.Trim();
+
+        query = query.Where(application =>
+            application.Company.Contains(searchTerm) ||
+            application.Position.Contains(searchTerm));
     }
 
+    if (selectedStage.HasValue)
+    {
+        query = query.Where(application =>
+            application.Stage == selectedStage.Value);
+    }
+
+    if (selectedOutcome.HasValue)
+    {
+        query = query.Where(application =>
+            application.Outcome == selectedOutcome.Value);
+    }
+
+    query = sortOrder switch
+    {
+        "oldest" => query
+            .OrderBy(application => application.ApplicationDate),
+
+        "company-asc" => query
+            .OrderBy(application => application.Company)
+            .ThenBy(application => application.Position),
+
+        "company-desc" => query
+            .OrderByDescending(application => application.Company)
+            .ThenBy(application => application.Position),
+
+        _ => query
+            .OrderByDescending(application => application.ApplicationDate)
+    };
+
+    var model = new ApplicationIndexViewModel
+    {
+        Applications = await query.ToListAsync(),
+        SearchTerm = searchTerm ?? string.Empty,
+        SelectedStage = selectedStage,
+        SelectedOutcome = selectedOutcome,
+        SortOrder = sortOrder
+    };
+
+    return View(model);
+}
     public IActionResult Create()
     {
         return View();
@@ -34,6 +86,10 @@ public class ApplicationsController : Controller
         {
             _context.JobApplications.Add(application);
             await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] =
+                "Application added successfully.";
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -78,6 +134,8 @@ public class ApplicationsController : Controller
                     throw;
                 }
             }
+            TempData["SuccessMessage"] =
+                "Application updated successfully.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -108,7 +166,8 @@ public class ApplicationsController : Controller
 
         _context.JobApplications.Remove(application);
         await _context.SaveChangesAsync();
-        
+        TempData["SuccessMessage"] =
+            "Application deleted successfully.";
         return RedirectToAction(nameof(Index));
 
     }

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model HomeDashboardViewModel
+
+@{
     ViewData["Title"] = "Home";
 }
 
@@ -24,7 +26,160 @@
                 Add Application
             </a>
         </div>
+
+        <section class="dashboard-section mt-5">
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Application Progress</h2>
+            <p class="text-muted mb-0">
+                See how your applications are converting into interviews and offers.
+            </p>
+        </div>
+
+        <a asp-controller="Applications"
+           asp-action="Index"
+           class="btn btn-outline-primary">
+            View Applications
+        </a>
     </div>
+
+    @if (Model.TotalApplications == 0)
+    {
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-5 text-center">
+                <h3 class="h5">No application data yet</h3>
+
+                <p class="text-muted">
+                    Add your first application to begin tracking your progress.
+                </p>
+
+                <a asp-controller="Applications"
+                   asp-action="Create"
+                   class="btn btn-primary">
+                    Add Application
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="dashboard-stats mb-4">
+            <div class="dashboard-stat">
+                <span class="dashboard-stat-label">Applications</span>
+                <strong>@Model.TotalApplications</strong>
+            </div>
+
+            <div class="dashboard-stat">
+                <span class="dashboard-stat-label">Interview Rate</span>
+                <strong>@($"{Model.InterviewOrBetterRate:0.#}%")</strong>
+            </div>
+
+            <div class="dashboard-stat">
+                <span class="dashboard-stat-label">Offer Rate</span>
+                <strong>@($"{Model.OfferRate:0.#}%")</strong>
+            </div>
+
+            <div class="dashboard-stat">
+                <span class="dashboard-stat-label">Accepted</span>
+                <strong>@Model.AcceptedApplications</strong>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-lg-5">
+                <div class="funnel-chart">
+                    <div class="funnel-stage">
+                        <div class="funnel-label">Applications</div>
+
+                        <div class="funnel-track">
+                            <div class="funnel-fill funnel-total"
+                                 style="width: 100%;">
+                            </div>
+                        </div>
+
+                        <div class="funnel-value">
+                            @Model.TotalApplications
+                            <span>100%</span>
+                        </div>
+                    </div>
+
+                    <div class="funnel-stage">
+                        <div class="funnel-label">
+                            Advanced Past Application
+                        </div>
+
+                        <div class="funnel-track">
+                            <div class="funnel-fill funnel-advanced"
+                                 style="width: @($"{Model.AdvancementRate:0.##}%");">
+                            </div>
+                        </div>
+
+                        <div class="funnel-value">
+                            @Model.AdvancedApplications
+                            <span>@($"{Model.AdvancementRate:0.#}%")</span>
+                        </div>
+                    </div>
+
+                    <div class="funnel-stage">
+                        <div class="funnel-label">Interview or Better</div>
+
+                        <div class="funnel-track">
+                            <div class="funnel-fill funnel-interview"
+                                 style="width: @($"{Model.InterviewOrBetterRate:0.##}%");">
+                            </div>
+                        </div>
+
+                        <div class="funnel-value">
+                            @Model.InterviewOrBetterApplications
+                            <span>@($"{Model.InterviewOrBetterRate:0.#}%")</span>
+                        </div>
+                    </div>
+
+                    <div class="funnel-stage">
+                        <div class="funnel-label">Offers</div>
+
+                        <div class="funnel-track">
+                            <div class="funnel-fill funnel-offer"
+                                 style="width: @($"{Model.OfferRate:0.##}%");">
+                            </div>
+                        </div>
+
+                        <div class="funnel-value">
+                            @Model.OfferApplications
+                            <span>@($"{Model.OfferRate:0.#}%")</span>
+                        </div>
+                    </div>
+
+                    <div class="funnel-stage">
+                        <div class="funnel-label">Accepted</div>
+
+                        <div class="funnel-track">
+                            <div class="funnel-fill funnel-accepted"
+                                 style="width: @($"{Model.AcceptanceRate:0.##}%");">
+                            </div>
+                        </div>
+
+                        <div class="funnel-value">
+                            @Model.AcceptedApplications
+                            <span>@($"{Model.AcceptanceRate:0.#}%")</span>
+                        </div>
+                    </div>
+                </div>
+
+                @{
+                    var applicationLabel =
+                    Model.MultipleInterviewApplications == 1
+                    ? "application"
+                    : "applications";
+                }
+
+                <p class="text-muted small text-center mt-4 mb-0">
+                    @Model.MultipleInterviewApplications @applicationLabel
+                    reached at least two interview rounds.
+                </p>
+            </div>
+        </div>
+    }
 </section>
 
 <section class="pb-5">

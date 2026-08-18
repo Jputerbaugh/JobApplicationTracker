@@ -1,4 +1,4 @@
-@model IEnumerable<JobApplication>
+@model ApplicationIndexViewModel
 
 @{
     ViewData["Title"] = "Applications";
@@ -17,7 +17,81 @@
     </a>
 </div>
 
-@if (!Model.Any())
+<form asp-action="Index"
+      method="get"
+      class="card border-0 shadow-sm mb-4">
+
+    <div class="card-body">
+        <div class="row g-3 align-items-end">
+            <div class="col-lg-4 col-md-6">
+                <label asp-for="SearchTerm"
+                       class="form-label">
+                    Search
+                </label>
+
+                <input asp-for="SearchTerm"
+                       class="form-control"
+                       placeholder="Company or position" />
+            </div>
+
+            <div class="col-lg-2 col-md-6">
+                <label asp-for="SelectedStage"
+                       class="form-label">
+                    Stage
+                </label>
+
+                <select asp-for="SelectedStage"
+                        asp-items="Html.GetEnumSelectList<ApplicationStage>()"
+                        class="form-select">
+                    <option value="">All Stages</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2 col-md-6">
+                <label asp-for="SelectedOutcome"
+                       class="form-label">
+                    Outcome
+                </label>
+
+                <select asp-for="SelectedOutcome"
+                        asp-items="Html.GetEnumSelectList<ApplicationOutcome>()"
+                        class="form-select">
+                    <option value="">All Outcomes</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2 col-md-6">
+                <label asp-for="SortOrder"
+                       class="form-label">
+                    Sort By
+                </label>
+
+                <select asp-for="SortOrder" class="form-select">
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="company-asc">Company A–Z</option>
+                    <option value="company-desc">Company Z–A</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2 col-md-12">
+                <div class="d-flex gap-2">
+                    <button type="submit"
+                            class="btn btn-primary flex-grow-1">
+                        Apply
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        Clear
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@if (!Model.Applications.Any())
 {
     <div class="card border-0 shadow-sm">
         <div class="card-body text-center py-5">
@@ -53,7 +127,7 @@ else
                 </thead>
 
                 <tbody>
-                    @foreach (var application in Model)
+                    @foreach (var application in Model.Applications)
                     {
                         var stageClass = application.Stage switch
                         {

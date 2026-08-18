@@ -64,7 +64,7 @@ public enum ApplicationOutcome
     Declined = 5
 }
 
-public class JobApplication
+public class JobApplication : IValidatableObject
 {
     public int Id { get; set; }
 
@@ -80,7 +80,7 @@ public class JobApplication
 
     [Required(ErrorMessage = "Location is required.")]
     [Display(Name = "Location")]
-    public string? Location { get; set; }
+    public string Location { get; set; } = string.Empty;
 
     [Display(Name = "Furthest Stage Reached")]
     public ApplicationStage Stage { get; set; } = ApplicationStage.Applied;
@@ -106,6 +106,46 @@ public class JobApplication
 
     public string? Notes { get; set; }
 
+
+    public IEnumerable<ValidationResult> Validate(
+    ValidationContext validationContext)
+{
+    if ((Outcome == ApplicationOutcome.Accepted ||
+         Outcome == ApplicationOutcome.Declined) &&
+        Stage != ApplicationStage.Offer)
+    {
+        yield return new ValidationResult(
+            "Accepted or declined applications must have reached the Offer stage.",
+            new[]
+            {
+                nameof(Stage),
+                nameof(Outcome)
+            });
+    }
+
+    if (FurthestInterviewRound != InterviewRound.None &&
+        (int)Stage < (int)ApplicationStage.Interviewing)
+    {
+        yield return new ValidationResult(
+            "An interview round can only be recorded after reaching the Interviewing or Offer stage.",
+            new[]
+            {
+                nameof(Stage),
+                nameof(FurthestInterviewRound)
+            });
+    }
+
+    if (Stage == ApplicationStage.Interviewing &&
+        FurthestInterviewRound == InterviewRound.None)
+    {
+        yield return new ValidationResult(
+            "Select the furthest interview round reached.",
+            new[]
+            {
+                nameof(FurthestInterviewRound)
+            });
+    }
+}
 }
 
 
