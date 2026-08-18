@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject IConfiguration Configuration
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -34,6 +36,33 @@
             </div>
         </nav>
     </header>
+
+    @if (Configuration.GetValue<bool>("DemoMode"))
+    {
+        <div class="alert alert-info mt-3" role="alert">
+            <div class="d-flex flex-column flex-md-row
+                        justify-content-between align-items-md-center gap-2">
+                <div>
+                    <strong>Shared Portfolio Demo</strong>
+
+                    <div class="small">
+                        All applications are fictional. Changes are shared
+                        between visitors and may be reset at any time.
+                    </div>
+                </div>
+
+                <form asp-controller="Demo"
+                    asp-action="Reset"
+                    method="post">
+                    <button type="submit"
+                            class="btn btn-sm btn-outline-info">
+                        Reset Demo Data
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+
     <div class="container">
         <main role="main" class="pb-3">
             @if (TempData["SuccessMessage"] is string successMessage)

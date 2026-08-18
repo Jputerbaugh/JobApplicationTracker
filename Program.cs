@@ -36,4 +36,17 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 
+Console.WriteLine(
+    $"Demo mode enabled: {app.Configuration.GetValue<bool>("DemoMode")}");
+
+if (app.Configuration.GetValue<bool>("DemoMode"))
+{
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider
+        .GetRequiredService<ApplicationDbContext>();
+    
+    await context.Database.EnsureCreatedAsync();
+    await DemoDataSeeder.SeedAsync(context);
+}
+
 app.Run();
