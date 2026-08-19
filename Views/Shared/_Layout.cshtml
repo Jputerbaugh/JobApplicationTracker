@@ -66,16 +66,15 @@
 
     @if (Configuration.GetValue<bool>("DemoMode"))
     {
-        <div class="alert alert-info mt-3" role="alert">
-            <div class="d-flex flex-column flex-md-row
-                        justify-content-between align-items-md-center gap-2">
-                <div>
-                    <strong>Shared Portfolio Demo</strong>
+        <div class="app-shell">
+            <aside class="demo-notice" aria-label="Shared demo information">
+                <div class="demo-notice-copy">
+                    <strong>Shared Demo</strong>
 
-                    <div class="small">
-                        All applications are fictional. Changes are shared
-                        between visitors and may be reset at any time.
-                    </div>
+                    <span>
+                        All applications are fictional. Changes are shared and
+                        may reset periodically.
+                    </span>
                 </div>
 
                 <form asp-controller="Demo"
@@ -86,12 +85,12 @@
                         Reset Demo Data
                     </button>
                 </form>
-            </div>
+            </aside>
         </div>
     }
 
     <div class="container-fluid app-shell">
-        <main role="main" class="pb-3">
+        <main role="main" class="main-content">
             @if (TempData["SuccessMessage"] is string successMessage)
             {
                 <div class="alert alert-success alert-dismissible fade show mt-3"

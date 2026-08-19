@@ -4,230 +4,239 @@
     ViewData["Title"] = "Applications";
 }
 
-<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
-    <div>
-        <h1 class="fw-bold mb-1">Job Applications</h1>
-        <p class="text-muted mb-0">
-            Review and manage the opportunities in your job search.
-        </p>
+<div class="applications-page">
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <header class="page-header">
+            <div>
+                <h1>Job Applications</h1>
+
+                <p>
+                    Review and manage the opportunities in your job search.
+                </p>
+            </div>
+
+            <a asp-action="Create"
+            class="btn btn-success">
+                Add New Application
+            </a>
+        </header>
     </div>
 
-    <a asp-action="Create" class="btn btn-primary">
-        Add New Application
-    </a>
-</div>
+    <form asp-action="Index"
+        method="get"
+        class="card applications-filter-panel mb-4">
 
-<form asp-action="Index"
-      method="get"
-      class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-lg-4 col-md-6">
+                    <label asp-for="SearchTerm"
+                        class="form-label">
+                        Search
+                    </label>
 
-    <div class="card-body">
-        <div class="row g-3 align-items-end">
-            <div class="col-lg-4 col-md-6">
-                <label asp-for="SearchTerm"
-                       class="form-label">
-                    Search
-                </label>
+                    <input asp-for="SearchTerm"
+                        class="form-control"
+                        placeholder="Company or position" />
+                </div>
 
-                <input asp-for="SearchTerm"
-                       class="form-control"
-                       placeholder="Company or position" />
-            </div>
+                <div class="col-lg-2 col-md-6">
+                    <label asp-for="SelectedStage"
+                        class="form-label">
+                        Stage
+                    </label>
 
-            <div class="col-lg-2 col-md-6">
-                <label asp-for="SelectedStage"
-                       class="form-label">
-                    Stage
-                </label>
+                    <select asp-for="SelectedStage"
+                            asp-items="Html.GetEnumSelectList<ApplicationStage>()"
+                            class="form-select">
+                        <option value="">All Stages</option>
+                    </select>
+                </div>
 
-                <select asp-for="SelectedStage"
-                        asp-items="Html.GetEnumSelectList<ApplicationStage>()"
-                        class="form-select">
-                    <option value="">All Stages</option>
-                </select>
-            </div>
+                <div class="col-lg-2 col-md-6">
+                    <label asp-for="SelectedOutcome"
+                        class="form-label">
+                        Outcome
+                    </label>
 
-            <div class="col-lg-2 col-md-6">
-                <label asp-for="SelectedOutcome"
-                       class="form-label">
-                    Outcome
-                </label>
+                    <select asp-for="SelectedOutcome"
+                            asp-items="Html.GetEnumSelectList<ApplicationOutcome>()"
+                            class="form-select">
+                        <option value="">All Outcomes</option>
+                    </select>
+                </div>
 
-                <select asp-for="SelectedOutcome"
-                        asp-items="Html.GetEnumSelectList<ApplicationOutcome>()"
-                        class="form-select">
-                    <option value="">All Outcomes</option>
-                </select>
-            </div>
+                <div class="col-lg-2 col-md-6">
+                    <label asp-for="SortOrder"
+                        class="form-label">
+                        Sort By
+                    </label>
 
-            <div class="col-lg-2 col-md-6">
-                <label asp-for="SortOrder"
-                       class="form-label">
-                    Sort By
-                </label>
+                    <select asp-for="SortOrder" class="form-select">
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="company-asc">Company A–Z</option>
+                        <option value="company-desc">Company Z–A</option>
+                    </select>
+                </div>
 
-                <select asp-for="SortOrder" class="form-select">
-                    <option value="newest">Newest</option>
-                    <option value="oldest">Oldest</option>
-                    <option value="company-asc">Company A–Z</option>
-                    <option value="company-desc">Company Z–A</option>
-                </select>
-            </div>
+                <div class="col-lg-2 col-md-12">
+                    <div class="d-flex gap-2">
+                        <button type="submit"
+                                class="btn btn-primary flex-grow-1">
+                            Apply
+                        </button>
 
-            <div class="col-lg-2 col-md-12">
-                <div class="d-flex gap-2">
-                    <button type="submit"
-                            class="btn btn-primary flex-grow-1">
-                        Apply
-                    </button>
-
-                    <a asp-action="Index"
-                       class="btn btn-outline-secondary">
-                        Clear
-                    </a>
+                        <a asp-action="Index"
+                        class="btn btn-outline-secondary">
+                            Clear
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 
-@if (!Model.Applications.Any())
-{
-    <div class="card border-0 shadow-sm">
-        <div class="card-body text-center py-5">
-            <h2 class="h4">No applications yet</h2>
+    @if (!Model.Applications.Any())
+    {
+        <div class="card applications-table-panel">
+            <div class="card-body text-center py-5">
+                <h2 class="h4">No applications yet</h2>
 
-            <p class="text-muted">
-                Add your first job application to begin tracking your search.
-            </p>
+                <p class="text-muted">
+                    Add your first job application to begin tracking your search.
+                </p>
 
-            <a asp-action="Create" class="btn btn-primary">
-                Add Your First Application
-            </a>
+                <a asp-action="Create" class="btn btn-primary">
+                    Add Your First Application
+                </a>
+            </div>
         </div>
-    </div>
-}
-else
-{
-    <div class="card border-0 shadow-sm">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead>
-                    <tr>
-                        <th>Company</th>
-                        <th>Position</th>
-                        <th>Location</th>
-                        <th>Stage</th>
-                        <th>Interview Round</th>
-                        <th>Outcome</th>
-                        <th>Application Date</th>
-                        <th>Notes</th>
-                        <th class="text-end">Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var application in Model.Applications)
-                    {
-                        var stageClass = application.Stage switch
-                        {
-                            ApplicationStage.Interested => "text-bg-secondary",
-                            ApplicationStage.Applied => "text-bg-primary",
-                            ApplicationStage.Assessment => "text-bg-info",
-                            ApplicationStage.RecruiterScreen => "text-bg-warning",
-                            ApplicationStage.Interviewing => "text-bg-warning",
-                            ApplicationStage.Offer => "text-bg-success",
-                            _ => "text-bg-secondary"
-                        };
-
-                        var outcomeClass = application.Outcome switch
-                        {
-                            ApplicationOutcome.Active => "text-bg-primary",
-                            ApplicationOutcome.NoResponse => "text-bg-secondary",
-                            ApplicationOutcome.Rejected => "text-bg-danger",
-                            ApplicationOutcome.Withdrawn => "text-bg-dark",
-                            ApplicationOutcome.Accepted => "text-bg-success",
-                            ApplicationOutcome.Declined => "text-bg-dark",
-                            _ => "text-bg-secondary"
-                        };
-
+    }
+    else
+    {
+        <div class="card applications-table-panel">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle applications-table">
+                    <thead>
                         <tr>
-                            <td class="fw-semibold">
-                                @application.Company
-                            </td>
-
-                            <td>@application.Position</td>
-
-                            <td>
-                                @if (string.IsNullOrWhiteSpace(application.Location))
-                                {
-                                    <span class="text-muted">—</span>
-                                }
-                                else
-                                {
-                                    @application.Location
-                                }
-                            </td>
-
-                            <td>
-                                <span class="badge @stageClass">
-                                    @Html.DisplayFor(modelItem => application.Stage)
-                                </span>
-                            </td>
-
-                            <td>
-                                @if (application.FurthestInterviewRound == InterviewRound.None)
-                                {
-                                    <span class="text-muted">—</span>
-                                }
-                                else
-                                {
-                                    @Html.DisplayFor(
-                                        modelItem => application.FurthestInterviewRound
-                                    )
-                                }
-                            </td>
-
-                            <td>
-                                <span class="badge @outcomeClass">
-                                    @Html.DisplayFor(modelItem => application.Outcome)
-                                </span>
-                            </td>
-
-                            <td>
-                                @application.ApplicationDate.ToShortDateString()
-                            </td>
-
-                            <td>
-                                @if (string.IsNullOrWhiteSpace(application.Notes))
-                                {
-                                    <span class="text-muted">—</span>
-                                }
-                                else
-                                {
-                                    @application.Notes
-                                }
-                            </td>
-
-                            <td class="text-end">
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <a asp-action="Edit"
-                                       asp-route-id="@application.Id"
-                                       class="btn btn-outline-primary">
-                                        Edit
-                                    </a>
-
-                                    <a asp-action="Delete"
-                                       asp-route-id="@application.Id"
-                                       class="btn btn-outline-danger">
-                                        Delete
-                                    </a>
-                                </div>
-                            </td>
+                            <th>Company</th>
+                            <th>Position</th>
+                            <th>Location</th>
+                            <th>Stage</th>
+                            <th>Interview Round</th>
+                            <th>Outcome</th>
+                            <th>Application Date</th>
+                            <th>Notes</th>
+                            <th class="text-end">Actions</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var application in Model.Applications)
+                        {
+                            var stageClass = application.Stage switch
+                            {
+                                ApplicationStage.Interested => "text-bg-secondary",
+                                ApplicationStage.Applied => "text-bg-primary",
+                                ApplicationStage.Assessment => "text-bg-info",
+                                ApplicationStage.RecruiterScreen => "text-bg-warning",
+                                ApplicationStage.Interviewing => "text-bg-warning",
+                                ApplicationStage.Offer => "text-bg-success",
+                                _ => "text-bg-secondary"
+                            };
+
+                            var outcomeClass = application.Outcome switch
+                            {
+                                ApplicationOutcome.Active => "text-bg-primary",
+                                ApplicationOutcome.NoResponse => "text-bg-secondary",
+                                ApplicationOutcome.Rejected => "text-bg-danger",
+                                ApplicationOutcome.Withdrawn => "text-bg-dark",
+                                ApplicationOutcome.Accepted => "text-bg-success",
+                                ApplicationOutcome.Declined => "text-bg-dark",
+                                _ => "text-bg-secondary"
+                            };
+
+                            <tr>
+                                <td class="fw-semibold">
+                                    @application.Company
+                                </td>
+
+                                <td>@application.Position</td>
+
+                                <td>
+                                    @if (string.IsNullOrWhiteSpace(application.Location))
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
+                                    else
+                                    {
+                                        @application.Location
+                                    }
+                                </td>
+
+                                <td>
+                                    <span class="badge @stageClass">
+                                        @Html.DisplayFor(modelItem => application.Stage)
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @if (application.FurthestInterviewRound == InterviewRound.None)
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(
+                                            modelItem => application.FurthestInterviewRound
+                                        )
+                                    }
+                                </td>
+
+                                <td>
+                                    <span class="badge @outcomeClass">
+                                        @Html.DisplayFor(modelItem => application.Outcome)
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @application.ApplicationDate.ToString("MMM d, yyyy")
+                                </td>
+
+                                <td class="application-notes">
+                                    @if (string.IsNullOrWhiteSpace(application.Notes))
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
+                                    else
+                                    {
+                                        <span title="@application.Notes">
+                                            @application.Notes
+                                        </span>
+                                    }
+                                </td>
+
+                                <td class="text-end application-actions">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a asp-action="Edit"
+                                        asp-route-id="@application.Id"
+                                        class="btn btn-outline-primary">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                        asp-route-id="@application.Id"
+                                        class="btn btn-outline-danger">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-}
+    }
+</div>       

@@ -4,131 +4,131 @@
     ViewData["Title"] = "Delete Application";
 }
 
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="mb-4">
-            <h1 class="fw-bold text-danger mb-1">Delete Application</h1>
+<div class="form-page delete-page">
+    <header class="page-header delete-page-header">
+        <div>
+            <h1 class="delete-page-title">Delete Application</h1>
 
-            <p class="text-muted mb-0">
+            <p>
                 Review the application before permanently deleting it.
             </p>
         </div>
+    </header>
 
-        <div class="alert alert-danger" role="alert">
-            <strong>Are you sure?</strong>
-            This action cannot be undone.
-        </div>
+    <div class="alert alert-danger delete-warning" role="alert">
+        <strong>Are you sure?</strong>
+        This action cannot be undone.
+    </div>
 
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-4">
-                <h2 class="h4 mb-4">
-                    @Model.Company — @Model.Position
-                </h2>
+    <div class="card delete-panel">
+        <div class="card-body application-form-body">
+            <h2 class="h4 mb-4">
+                @Model.Company — @Model.Position
+            </h2>
 
-                <dl class="row mb-0">
-                    <dt class="col-sm-4">Company</dt>
-                    <dd class="col-sm-8">@Model.Company</dd>
+            <dl class="delete-details">
+                <dt>Company</dt>
+                <dd>@Model.Company</dd>
 
-                    <dt class="col-sm-4">Position</dt>
-                    <dd class="col-sm-8">@Model.Position</dd>
+                <dt>Position</dt>
+                <dd>@Model.Position</dd>
 
-                    <dt class="col-sm-4">Location</dt>
-                    <dd class="col-sm-8">
-                        @if (string.IsNullOrWhiteSpace(Model.Location))
-                        {
-                            <span class="text-muted">—</span>
-                        }
-                        else
-                        {
-                            @Model.Location
-                        }
-                    </dd>
+                <dt>Location</dt>
+                <dd>
+                    @if (string.IsNullOrWhiteSpace(Model.Location))
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                    else
+                    {
+                        @Model.Location
+                    }
+                </dd>
 
-                    <dt class="col-sm-4">Furthest Stage Reached</dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.Stage)
-                    </dd>
+                <dt>Furthest Stage Reached</dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Stage)
+                </dd>
 
-                    <dt class="col-sm-4">Interview Round Reached</dt>
-                    <dd class="col-sm-8">
-                        @if (Model.FurthestInterviewRound == InterviewRound.None)
-                        {
-                            <span class="text-muted">—</span>
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(model => model.FurthestInterviewRound)
-                        }
-                    </dd>
+                <dt>Interview Round Reached</dt>
+                <dd>
+                    @if (Model.FurthestInterviewRound == InterviewRound.None)
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => model.FurthestInterviewRound)
+                    }
+                </dd>
 
-                    <dt class="col-sm-4">Outcome</dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.Outcome)
-                    </dd>
+                <dt>Outcome</dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Outcome)
+                </dd>
 
-                    <dt class="col-sm-4">Application Date</dt>
-                    <dd class="col-sm-8">
-                        @Model.ApplicationDate.ToShortDateString()
-                    </dd>
+                <dt>Application Date</dt>
+                <dd>
+                    @Model.ApplicationDate.ToString("MMM d, yyyy")
+                </dd>
 
-                    <dt class="col-sm-4">Follow-Up Date</dt>
-                    <dd class="col-sm-8">
-                        @if (Model.FollowUpDate.HasValue)
-                        {
-                            @Model.FollowUpDate.Value.ToShortDateString()
-                        }
-                        else
-                        {
-                            <span class="text-muted">—</span>
-                        }
-                    </dd>
+                <dt>Follow-Up Date</dt>
+                <dd>
+                    @if (Model.FollowUpDate.HasValue)
+                    {
+                        @Model.FollowUpDate.Value.ToString("MMM d, yyyy")
+                    }
+                    else
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                </dd>
 
-                    <dt class="col-sm-4">Job Posting</dt>
-                    <dd class="col-sm-8">
-                        @if (!string.IsNullOrWhiteSpace(Model.JobURL))
-                        {
-                            <a href="@Model.JobURL"
-                               target="_blank"
-                               rel="noopener noreferrer">
-                                View Posting
-                            </a>
-                        }
-                        else
-                        {
-                            <span class="text-muted">—</span>
-                        }
-                    </dd>
-
-                    <dt class="col-sm-4">Notes</dt>
-                    <dd class="col-sm-8">
-                        @if (string.IsNullOrWhiteSpace(Model.Notes))
-                        {
-                            <span class="text-muted">—</span>
-                        }
-                        else
-                        {
-                            @Model.Notes
-                        }
-                    </dd>
-                </dl>
-
-                <hr class="my-4" />
-
-                <form asp-action="Delete" method="post">
-                    <input type="hidden" asp-for="Id" />
-
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-danger">
-                            Permanently Delete
-                        </button>
-
-                        <a asp-action="Index"
-                           class="btn btn-outline-secondary">
-                            Cancel
+                <dt>Job Posting</dt>
+                <dd>
+                    @if (!string.IsNullOrWhiteSpace(Model.JobURL))
+                    {
+                        <a href="@Model.JobURL"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            View Posting
                         </a>
-                    </div>
-                </form>
-            </div>
+                    }
+                    else
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                </dd>
+
+                <dt>Notes</dt>
+                <dd>
+                    @if (string.IsNullOrWhiteSpace(Model.Notes))
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                    else
+                    {
+                        @Model.Notes
+                    }
+                </dd>
+            </dl>
+
+            <hr class="my-4" />
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-danger">
+                        Permanently Delete
+                    </button>
+
+                    <a asp-action="Index"
+                        class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
