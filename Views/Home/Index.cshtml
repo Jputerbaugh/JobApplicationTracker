@@ -1,95 +1,128 @@
 ﻿@model HomeDashboardViewModel
 
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Dashboard";
 }
 
-<section class="text-center py-5">
-    <div class="container">
-        <h1 class="display-4 fw-bold">Organize Your Job Search</h1>
+@functions {
+    private static string FormatFollowUpDate(DateTime date)
+    {
+        var daysUntil = (date.Date - DateTime.Today).Days;
 
-        <p class="lead text-muted mx-auto mb-4" style="max-width: 700px;">
-            Keep your applications, statuses, important dates, job postings,
-            and notes organized in one convenient place.
-        </p>
+        return daysUntil switch
+        {
+            0 => "Today",
+            1 => "Tomorrow",
+            > 1 and < 7 => $"In {daysUntil} days",
+            _ => date.ToString("MMM d")
+        };
+    }
 
-        <div class="d-flex justify-content-center gap-2 flex-wrap">
+    private static string FormatApplicationDate(DateTime date)
+    {
+        var daysAgo = (DateTime.Today - date.Date).Days;
+
+        return daysAgo switch
+        {
+            0 => "Today",
+            1 => "Yesterday",
+            > 1 and < 30 => $"{daysAgo} days ago",
+            _ => date.ToString("MMM d")
+        };
+    }
+}
+
+<div class="dashboard-page">
+    <header class="dashboard-header">
+        <div>
+            <h1>Dashboard</h1>
+
+            <p>
+                Overview of your current job search
+            </p>
+        </div>
+
+        <div class="dashboard-actions">
             <a asp-controller="Applications"
                asp-action="Index"
-               class="btn btn-primary btn-lg">
+               class="btn btn-outline-secondary">
                 View Applications
             </a>
 
             <a asp-controller="Applications"
                asp-action="Create"
-               class="btn btn-outline-primary btn-lg">
+               class="btn btn-success">
                 Add Application
             </a>
         </div>
-
-        <section class="dashboard-section mt-5">
-    <div class="d-flex justify-content-between align-items-start mb-4">
-        <div>
-            <h2 class="fw-bold mb-1">Application Progress</h2>
-            <p class="text-muted mb-0">
-                See how your applications are converting into interviews and offers.
-            </p>
-        </div>
-
-        <a asp-controller="Applications"
-           asp-action="Index"
-           class="btn btn-outline-primary">
-            View Applications
-        </a>
-    </div>
+    </header>
 
     @if (Model.TotalApplications == 0)
     {
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-5 text-center">
-                <h3 class="h5">No application data yet</h3>
+        <section class="dashboard-panel dashboard-empty">
+            <h2>No applications yet</h2>
 
-                <p class="text-muted">
-                    Add your first application to begin tracking your progress.
-                </p>
+            <p>
+                Add your first application to begin tracking your progress.
+            </p>
 
-                <a asp-controller="Applications"
-                   asp-action="Create"
-                   class="btn btn-primary">
-                    Add Application
-                </a>
-            </div>
-        </div>
+            <a asp-controller="Applications"
+               asp-action="Create"
+               class="btn btn-success">
+                Add Application
+            </a>
+        </section>
     }
     else
     {
-        <div class="dashboard-stats mb-4">
-            <div class="dashboard-stat">
-                <span class="dashboard-stat-label">Applications</span>
+        <section class="dashboard-stats"
+                 aria-label="Application statistics">
+            <article class="dashboard-stat">
+                <span class="dashboard-stat-label">
+                    Applications
+                </span>
+
                 <strong>@Model.TotalApplications</strong>
-            </div>
+            </article>
 
-            <div class="dashboard-stat">
-                <span class="dashboard-stat-label">Interview Rate</span>
-                <strong>@($"{Model.InterviewOrBetterRate:0.#}%")</strong>
-            </div>
+            <article class="dashboard-stat">
+                <span class="dashboard-stat-label">
+                    Interview Rate
+                </span>
 
-            <div class="dashboard-stat">
-                <span class="dashboard-stat-label">Offer Rate</span>
-                <strong>@($"{Model.OfferRate:0.#}%")</strong>
-            </div>
+                <strong>
+                    @($"{Model.InterviewOrBetterRate:0.#}%")
+                </strong>
+            </article>
 
-            <div class="dashboard-stat">
-                <span class="dashboard-stat-label">Accepted</span>
+            <article class="dashboard-stat">
+                <span class="dashboard-stat-label">
+                    Offer Rate
+                </span>
+
+                <strong>
+                    @($"{Model.OfferRate:0.#}%")
+                </strong>
+            </article>
+
+            <article class="dashboard-stat">
+                <span class="dashboard-stat-label">
+                    Accepted
+                </span>
+
                 <strong>@Model.AcceptedApplications</strong>
-            </div>
-        </div>
+            </article>
+        </section>
 
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-4 p-lg-5">
+        <div class="dashboard-content-grid">
+            <section class="dashboard-panel dashboard-progress">
+                <h2>Application Progress</h2>
+
                 <div class="funnel-chart">
                     <div class="funnel-stage">
-                        <div class="funnel-label">Applications</div>
+                        <div class="funnel-label">
+                            Applications
+                        </div>
 
                         <div class="funnel-track">
                             <div class="funnel-fill funnel-total"
@@ -116,12 +149,17 @@
 
                         <div class="funnel-value">
                             @Model.AdvancedApplications
-                            <span>@($"{Model.AdvancementRate:0.#}%")</span>
+
+                            <span>
+                                @($"{Model.AdvancementRate:0.#}%")
+                            </span>
                         </div>
                     </div>
 
                     <div class="funnel-stage">
-                        <div class="funnel-label">Interview or Better</div>
+                        <div class="funnel-label">
+                            Interview or Better
+                        </div>
 
                         <div class="funnel-track">
                             <div class="funnel-fill funnel-interview"
@@ -131,12 +169,17 @@
 
                         <div class="funnel-value">
                             @Model.InterviewOrBetterApplications
-                            <span>@($"{Model.InterviewOrBetterRate:0.#}%")</span>
+
+                            <span>
+                                @($"{Model.InterviewOrBetterRate:0.#}%")
+                            </span>
                         </div>
                     </div>
 
                     <div class="funnel-stage">
-                        <div class="funnel-label">Offers</div>
+                        <div class="funnel-label">
+                            Offers
+                        </div>
 
                         <div class="funnel-track">
                             <div class="funnel-fill funnel-offer"
@@ -146,12 +189,17 @@
 
                         <div class="funnel-value">
                             @Model.OfferApplications
-                            <span>@($"{Model.OfferRate:0.#}%")</span>
+
+                            <span>
+                                @($"{Model.OfferRate:0.#}%")
+                            </span>
                         </div>
                     </div>
 
                     <div class="funnel-stage">
-                        <div class="funnel-label">Accepted</div>
+                        <div class="funnel-label">
+                            Accepted
+                        </div>
 
                         <div class="funnel-track">
                             <div class="funnel-fill funnel-accepted"
@@ -161,68 +209,106 @@
 
                         <div class="funnel-value">
                             @Model.AcceptedApplications
-                            <span>@($"{Model.AcceptanceRate:0.#}%")</span>
+
+                            <span>
+                                @($"{Model.AcceptanceRate:0.#}%")
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 @{
                     var applicationLabel =
-                    Model.MultipleInterviewApplications == 1
-                    ? "application"
-                    : "applications";
+                        Model.MultipleInterviewApplications == 1
+                            ? "application"
+                            : "applications";
                 }
 
-                <p class="text-muted small text-center mt-4 mb-0">
+                <p class="dashboard-progress-note">
                     @Model.MultipleInterviewApplications @applicationLabel
                     reached at least two interview rounds.
                 </p>
-            </div>
+            </section>
+
+            <aside class="dashboard-side-column">
+                <section class="dashboard-panel">
+                    <h2>Upcoming Follow-Ups</h2>
+
+                    @if (Model.UpcomingFollowUps.Any())
+                    {
+                        <div class="dashboard-list">
+                            @foreach (var application in
+                                      Model.UpcomingFollowUps)
+                            {
+                                <a asp-controller="Applications"
+                                   asp-action="Edit"
+                                   asp-route-id="@application.Id"
+                                   class="dashboard-list-item">
+                                    <span>
+                                        <strong>
+                                            @application.Company
+                                        </strong>
+
+                                        <small>
+                                            @application.Position
+                                        </small>
+                                    </span>
+
+                                    <time>
+                                        @FormatFollowUpDate(
+                                            application.FollowUpDate!.Value)
+                                    </time>
+                                </a>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="dashboard-list-empty">
+                            No upcoming follow-ups.
+                        </p>
+                    }
+                </section>
+
+                <section class="dashboard-panel">
+                    <h2>Recent Applications</h2>
+
+                    @if (Model.RecentApplications.Any())
+                    {
+                        <div class="dashboard-list">
+                            @foreach (var application in
+                                      Model.RecentApplications)
+                            {
+                                <a asp-controller="Applications"
+                                   asp-action="Edit"
+                                   asp-route-id="@application.Id"
+                                   class="dashboard-list-item">
+                                    <span>
+                                        <strong>
+                                            @application.Company
+                                        </strong>
+
+                                        <small>
+                                            @application.Position
+                                        </small>
+                                    </span>
+
+                                    <time>
+                                        @FormatApplicationDate(
+                                            application.ApplicationDate)
+                                    </time>
+                                </a>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="dashboard-list-empty">
+                            No recent applications.
+                        </p>
+                    }
+                </section>
+            </aside>
         </div>
     }
-</section>
-
-<section class="pb-5">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h2 class="card-title h4">Track Applications</h2>
-
-                        <p class="card-text text-muted">
-                            Save company names, positions, locations, application
-                            dates, and links to job postings.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h2 class="card-title h4">Monitor Progress</h2>
-
-                        <p class="card-text text-muted">
-                            Update each opportunity as it moves from interested
-                            to applied, interviewing, offer, or another status.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h2 class="card-title h4">Plan Follow-Ups</h2>
-
-                        <p class="card-text text-muted">
-                            Record follow-up dates and notes so important
-                            opportunities and next steps are easier to remember.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+</div>

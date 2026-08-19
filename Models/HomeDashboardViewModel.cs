@@ -14,6 +14,11 @@ namespace JobApplicationTracker.Models
 
         public int AcceptedApplications { get; set; }
 
+
+        public List<DashboardApplicationItemViewModel> UpcomingFollowUps { get; set; } = new();
+        
+        public List<DashboardApplicationItemViewModel> RecentApplications { get; set; } = new();
+
         public double AdvancementRate =>
             CalculateRate(AdvancedApplications);
 
@@ -38,5 +43,18 @@ namespace JobApplicationTracker.Models
 
             return (double)count / TotalApplications * 100;
         }
+    }
+
+    public class DashboardApplicationItemViewModel
+    {
+        public int Id { get; set; }
+
+        public string Company { get; set; } = string.Empty;
+
+        public string Position { get; set; } = string.Empty;
+
+        public DateTime ApplicationDate { get; set; }
+
+        public DateTime? FollowUpDate { get; set; }
     }
 }

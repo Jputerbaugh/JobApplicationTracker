@@ -13,34 +13,68 @@ public class HomeController(ILogger<HomeController> logger, ApplicationDbContext
     private readonly ApplicationDbContext _context = context;
 
     public async Task<IActionResult> Index()
-{
-    var applications = await _context
-        .Set<JobApplication>()
-        .AsNoTracking()
-        .ToListAsync();
-
-    var model = new HomeDashboardViewModel
     {
-        TotalApplications = applications.Count,
+        var applications = await _context
+            .Set<JobApplication>()
+            .AsNoTracking()
+            .ToListAsync();
 
-        AdvancedApplications = applications.Count(application =>
-            application.Stage >= ApplicationStage.Assessment),
+        var today = DateTime.Today;
 
-        InterviewOrBetterApplications = applications.Count(application =>
-            application.Stage >= ApplicationStage.Interviewing),
+        var model = new HomeDashboardViewModel
+        {
+            TotalApplications = applications.Count,
 
-        MultipleInterviewApplications = applications.Count(application =>
-            application.FurthestInterviewRound >= InterviewRound.Second),
+            AdvancedApplications = applications.Count(application =>
+                application.Stage >= ApplicationStage.Assessment),
 
-        OfferApplications = applications.Count(application =>
-            application.Stage == ApplicationStage.Offer),
+            InterviewOrBetterApplications = applications.Count(application =>
+                application.Stage >= ApplicationStage.Interviewing),
 
-        AcceptedApplications = applications.Count(application =>
-            application.Outcome == ApplicationOutcome.Accepted)
-    };
+            MultipleInterviewApplications = applications.Count(application =>
+                application.FurthestInterviewRound >= InterviewRound.Second),
 
-    return View(model);
-}
+            OfferApplications = applications.Count(application =>
+                application.Stage == ApplicationStage.Offer),
+
+            AcceptedApplications = applications.Count(application =>
+                application.Outcome == ApplicationOutcome.Accepted),
+
+            UpcomingFollowUps = applications
+                .Where(application =>
+                    application.FollowUpDate.HasValue &&
+                    application.FollowUpDate.Value.Date >= today)
+                .OrderBy(application => application.FollowUpDate)
+                .Take(3)
+                .Select(application =>
+                    new DashboardApplicationItemViewModel
+                    {
+                        Id = application.Id,
+                        Company = application.Company,
+                        Position = application.Position,
+                        ApplicationDate = application.ApplicationDate,
+                        FollowUpDate = application.FollowUpDate
+                    })
+                .ToList(),
+
+            RecentApplications = applications
+                .OrderByDescending(application =>
+                    application.ApplicationDate)
+                .Take(3)
+                .Select(application =>
+                    new DashboardApplicationItemViewModel
+                    {
+                        Id = application.Id,
+                        Company = application.Company,
+                        Position = application.Position,
+                        ApplicationDate = application.ApplicationDate,
+                        FollowUpDate = application.FollowUpDate
+                    })
+                .ToList()
+        };
+
+        return View(model);
+    }
 
     public IActionResult Privacy()
     {

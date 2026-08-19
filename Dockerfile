@@ -16,6 +16,7 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 ENV ASPNETCORE_URLS=http://0.0.0.0:10000
+ENV DOTNET_HOSTBUILDER_RELOADCONFIGONCHANGE=false
 EXPOSE 10000
 
 ENTRYPOINT ["dotnet", "JobApplicationTracker.dll"]
